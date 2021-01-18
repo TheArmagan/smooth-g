@@ -93,68 +93,70 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
     <script>
-      const url = new URL(window.location.href);
-      const mainG = document.querySelector(".g");
-      const gAmount = document.querySelector(".g-amount");
-      const cpsElement = document.querySelector(".cps");
-      let amount = 0;
-      let cps = 0;
-      let _cps = 0;
-      let cpsHistory = [];
+      (() => {
+        const url = new URL(window.location.href);
+        const mainG = document.querySelector(".g");
+        const gAmount = document.querySelector(".g-amount");
+        const cpsElement = document.querySelector(".cps");
+        let amount = 0;
+        let cps = 0;
+        let _cps = 0;
+        let cpsHistory = [];
 
-      document.documentElement.style.filter = `sepia(1) hue-rotate(${
-        amount * 10
-      }deg)`;
+        document.documentElement.style.filter = `sepia(1) hue-rotate(${
+          amount * 10
+        }deg)`;
 
-      mainG.addEventListener("click", onClick);
-      mainG.addEventListener("contextmenu", onClick);
+        mainG.addEventListener("click", onClick);
+        mainG.addEventListener("contextmenu", onClick);
 
-      function onClick() {
-        lastKeyDown = Date.now();
-        amount++;
-        gAmount.textContent = amount;
-        gsap.to(".g-amount", {
-          scale:
-            amount % 100 == 99 || amount % 100 == 0 || amount % 100 == 1
-              ? "random(2,3)"
-              : "random(1,1.6)",
-          rotateZ: "random(-16,16)",
-          top: "random(-10,10)",
-          right: "random(-10,10)",
-          duration: 0.4,
-        });
-        cps++;
-        if (!url.searchParams.has("noColorEffects")) {
-          document.documentElement.style.filter = `sepia(1) hue-rotate(${
-            amount * 10
-          }deg)`;
+        function onClick() {
+          lastKeyDown = Date.now();
+          amount++;
+          gAmount.textContent = amount;
+          gsap.to(".g-amount", {
+            scale:
+              amount % 100 == 99 || amount % 100 == 0 || amount % 100 == 1
+                ? "random(2,3)"
+                : "random(1,1.6)",
+            rotateZ: "random(-16,16)",
+            top: "random(-10,10)",
+            right: "random(-10,10)",
+            duration: 0.4,
+          });
+          cps++;
+          if (!url.searchParams.has("noColorEffects")) {
+            document.documentElement.style.filter = `sepia(1) hue-rotate(${
+              amount * 10
+            }deg)`;
+          }
         }
-      }
 
-      if (url.searchParams.has("noColorEffects")) {
-        document.documentElement.style.filter = ``;
-      }
+        if (url.searchParams.has("noColorEffects")) {
+          document.documentElement.style.filter = ``;
+        }
 
-      setInterval(() => {
-        document.title = `ğ - ${amount} - ${_cps}`;
-        if (cps != 0) cpsHistory.unshift(cps);
-        cpsElement.innerHTML = `${cps} CPS<br/>${(
-          cpsHistory.reduce((all, current) => {
-            return current + all;
-          }, 0) / cpsHistory.length || 0
-        ).toFixed(2)} AVG`;
-        if (cpsHistory.length > 100) cpsHistory.length = 100;
-        _cps = cps;
-        cps = 0;
-      }, 1000);
+        setInterval(() => {
+          document.title = `ğ - ${amount} - ${_cps}`;
+          if (cps != 0) cpsHistory.unshift(cps);
+          cpsElement.innerHTML = `${cps} CPS<br/>${(
+            cpsHistory.reduce((all, current) => {
+              return current + all;
+            }, 0) / cpsHistory.length || 0
+          ).toFixed(2)} AVG`;
+          if (cpsHistory.length > 100) cpsHistory.length = 100;
+          _cps = cps;
+          cps = 0;
+        }, 1000);
 
-      setInterval(() => {
-        if (cps == 0) cpsHistory.unshift(0);
-      }, 2500);
+        setInterval(() => {
+          if (cps == 0) cpsHistory.unshift(0);
+        }, 2500);
 
-      document.addEventListener("contextmenu", (e) => {
-        e.preventDefault();
-      });
+        document.addEventListener("contextmenu", (e) => {
+          e.preventDefault();
+        });
+      })();
     </script>
   </body>
 </html>
