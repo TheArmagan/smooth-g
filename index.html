@@ -84,7 +84,7 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
     <script>
-      const url = new URL(location.href);
+      const url = new URL(window.location.href);
       const mainG = document.querySelector(".g");
       const gAmount = document.querySelector(".g-amount");
       const cpsElement = document.querySelector(".cps");
@@ -114,11 +114,15 @@
           duration: 0.4,
         });
         cps++;
-        if (url.searchParams.has("noColorEffects")) {
+        if (!url.searchParams.has("noColorEffects")) {
           document.documentElement.style.filter = `sepia(1) hue-rotate(${
             amount * 10
           }deg)`;
         }
+      }
+
+      if (url.searchParams.has("noColorEffects")) {
+        document.documentElement.style.filter = ``;
       }
 
       setInterval(() => {
