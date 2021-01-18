@@ -71,6 +71,7 @@
         bottom: 1rem;
         right: 1rem;
         font-size: 2rem;
+        text-align: right;
       }
     </style>
   </head>
@@ -91,6 +92,7 @@
       let amount = 0;
       let cps = 0;
       let _cps = 0;
+      let cpsHistory = [];
 
       document.documentElement.style.filter = `sepia(1) hue-rotate(${
         amount * 10
@@ -127,10 +129,20 @@
 
       setInterval(() => {
         document.title = `ğ - ${amount} - ${_cps}`;
-        cpsElement.textContent = `${cps} CPS`;
+        if (cps != 0) cpsHistory.unshift(cps);
+        cpsElement.innerHTML = `${cps} CPS<br/>${(
+          cpsHistory.reduce((all, current) => {
+            return current + all;
+          }, 0) / cpsHistory.length || 0
+        ).toFixed(2)} AVG`;
+        if (cpsHistory.length > 100) cpsHistory.length = 100;
         _cps = cps;
         cps = 0;
       }, 1000);
+
+      setInterval(() => {
+        if (cps == 0) cpsHistory.unshift(0);
+      }, 2500);
 
       document.addEventListener("contextmenu", (e) => {
         e.preventDefault();
