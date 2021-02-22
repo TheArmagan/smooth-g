@@ -16,8 +16,8 @@
 
       html,
       body {
-        background-color: #1f1f1f;
-        transition: filter 100ms ease;
+        width: 100%;
+        height: 100%;
       }
 
       .main {
@@ -50,6 +50,7 @@
       }
 
       #container {
+        background-color: #1f1f1f;
         width: 100vw;
         height: 100vh;
         display: flex;
@@ -69,18 +70,31 @@
         position: absolute;
         bottom: 1rem;
         right: 1rem;
-        font-size: 2rem;
+        font-size: 32px;
         text-align: right;
+      }
+
+      .rainbow-button {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 16px;
+        text-align: right;
+      }
+
+      .rainbow-mode {
+        background: linear-gradient(90deg, #662424, #665324, #626624, #426624, #246629, #246647, #246661, #244b66, #242e66, #3a2466, #572466, #66245e, #66244f, #66243b, #662424);
+        background-size: 900% 900%;
       }
     </style>
     <title>Smooth G</title>
     <meta property="og:site_name" content="thearmagan.github.io" />
-    <meta property="og:title" content="Yumuşak G" />
+    <meta property="og:title" content="Smooth G" />
     <meta property="og:description" content="ğ" />
     <meta property="theme-color" content="#2A251D" />
   </head>
   <body>
-    <div id="container">
+    <div id="container" :class="{'rainbow-mode': rainbowMode}">
       <div class="main" @click="click()">
         <button class="g">ğ</button>
         <span class="g-total">{{cps.total}}</span>
@@ -90,6 +104,9 @@
         <br>
         {{cps.top}} TOP
       </span>
+      <a class="rainbow-button" @click="rainbowMode = !rainbowMode">
+        {{rainbowMode ? "Disable Rainbow" : "Enable Rainbow"}}
+      </a>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
@@ -104,6 +121,7 @@
               total: 0,
               top: 0
             },
+            rainbowMode: false
           },
           mounted() {
             setInterval(() => {
@@ -127,9 +145,22 @@
                 right: "random(-10,10)",
                 duration: 0.4,
               });
+
+              if (this.rainbowMode) {
+                let total4x = app.cps.total*8;
+                gsap.to("#container", {
+                  backgroundPosition: `${total4x%200 >= 100 ? total4x%100 : 100-total4x%100}% ${total4x%200 <= 100 ? total4x%100 : 100-total4x%100}%`,
+                  duration: 1,
+                  ease: "expo.out"
+                })
+              }
             },
           },
         });
+
+        window.setTotal = (num=0)=>{
+          app.cps.total = num;
+        }
       })();
     </script>
   </body>
