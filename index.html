@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <style>
       * {
         padding: 0;
@@ -90,12 +90,12 @@
     <title>Smooth G</title>
     <meta property="og:site_name" content="thearmagan.github.io" />
     <meta property="og:title" content="Smooth G" />
-    <meta property="og:description" content="ğ" />
+    <meta property="og:description" content="Smooth G. Clicker. CPS Calculator." />
     <meta property="theme-color" content="#2A251D" />
   </head>
   <body>
     <div id="container" :class="{'rainbow-mode': rainbowMode}">
-      <div class="main" @click="click()">
+      <div class="main" @click="click($event)" @contextmenu="$event.preventDefault();">
         <button class="g">ğ</button>
         <span class="g-total">{{cps.total}}</span>
       </div>
@@ -131,13 +131,13 @@
             }, 1000);
           },
           methods: {
-            click() {
+            click(e) {
               this.cps.buffer++;
               this.cps.total++;
 
               gsap.to(".g-total", {
                 scale:
-                  this.cps.total % 100 == 99 || this.cps.total % 100 == 0 || this.cps.total % 100 == 1
+                  this.cps.total % 100 == 99 || this.cps.total % 100 == 0
                     ? "random(2,3)"
                     : "random(1,1.6)",
                 rotateZ: "random(-16,16)",
