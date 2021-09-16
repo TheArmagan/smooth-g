@@ -1,0 +1,107 @@
+* {
+  padding: 0;
+  margin: 0;
+  outline: 0;
+  box-sizing: border-box;
+  color: rgb(250, 250, 250);
+  user-select: none;
+  font-family: serif;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+.main {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  width: 50vh;
+  height: 50vh;
+}
+
+.g {
+  cursor: pointer;
+  font-size: 40vh;
+  background-color: transparent;
+  border: transparent;
+  position: absolute;
+  max-width: 50vh;
+  max-height: 50vh;
+  min-width: 50vh;
+  min-height: 50vh;
+  transition: all 150ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.g:hover {
+  transform: scale(1.1) rotateZ(-5deg);
+}
+
+.g:active {
+  transform: scale(1.5) rotateZ(5deg);
+}
+
+#container {
+  background-color: #1f1f1f;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.g-total {
+  font-size: 10vh;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.cps {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 32px;
+  text-align: right;
+}
+
+.rainbow-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 16px;
+  text-align: right;
+}
+
+.rainbow-mode {
+  background: linear-gradient(
+    90deg,
+    #662424,
+    #665324,
+    #626624,
+    #426624,
+    #246629,
+    #246647,
+    #246661,
+    #244b66,
+    #242e66,
+    #3a2466,
+    #572466,
+    #66245e,
+    #66244f,
+    #66243b,
+    #662424
+  );
+  background-size: 900% 900%;
+}
+
+.audio-button {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 16px;
+  text-align: right;
+}
