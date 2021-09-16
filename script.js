@@ -10,7 +10,9 @@
       },
       rainbowMode: false,
       audioMode: false,
-      audio: new Audio("./g.mp3")
+      audios: Array(6).fill("").map((_, i) => {
+        return new Audio(`./audios/g${1+i}.mp3`)
+      })
     },
     mounted() {
       setInterval(() => {
@@ -45,10 +47,22 @@
         }
 
         if (this.audioMode) {
-          this.audio.currentTime = 0;
-          this.audio.play();
+          let audio = randomPick(this.audios);
+          audio.currentTime = 0;
+          audio.play();
         }
       },
     },
   });
 })();
+
+
+function randomInteger(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function randomPick(arr) {
+  return arr[randomInteger(0, arr.length - 1)];
+};
